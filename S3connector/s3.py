@@ -9,6 +9,7 @@ key2 = os.getenv("AWS_SECRET_KEY")
 key3 = os.getenv("REGION")
 key4 = os.getenv("BUCKET_NAME")
 
+# S3는 datalake의 역할을 담당한다고 가정
 # Minio, GCS 등을 사용한다면 의존성 교체가 용이하도록 ABC 고려
 
 class S3object:
