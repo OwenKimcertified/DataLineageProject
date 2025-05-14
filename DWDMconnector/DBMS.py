@@ -54,6 +54,21 @@ class MasterConnector:
         finally:
             if __cursor:
                 __cursor.close()
-    
+
+    @contextmanager
+    def executemany(self, sql: str, params_list: list, db: str = None):
+        try:
+            with self._get_cursor(db=db) as cursor:
+                cursor.executemany(sql, params_list)
+                yield cursor # executemany는 보통 결과를 반환하지 않지만, 일관성을 위해 yield
+            self._conn.commit() # 성공 시 커밋
+        except Exception as e:
+            print(f"Batch transaction failed. Rolling back: {e}")
+            if self._conn and self._conn.open:
+                self._conn.rollback() # 실패 시 롤백
+            raise e # 예외 다시 발생
+
     def close(self):
-        return self.conn.close()
+        self.conn.close()
+        self._conn = None
+        return print("connection close")

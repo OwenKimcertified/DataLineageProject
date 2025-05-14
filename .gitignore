@@ -1,3 +1,7 @@
 .env
 master
 slave
+grafana_provisioning
+grafana
+etc
+data
