@@ -6,3 +6,4 @@ grafana
 etc
 data
 compose
+__pycache__
